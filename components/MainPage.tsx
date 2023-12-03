@@ -303,6 +303,7 @@ const TypingTest = () => {
               className="bg-[#EE7214] hover:bg-orange-700"
               onClick={() => setTimer(15)}
               endIcon={<ReplayIcon />}
+              color="success"
             >
               Try Again
             </Button>
