@@ -43,12 +43,12 @@ const ResultModal = ({
             Typing Test Results
           </h2>
           <Divider />
-          <p id="modal-modal-description" className="text-white">
-            Net Speed: <span className="text-yellow-400"> {netSpeed} WPM</span>
+          <p id="modal-modal-description" className="text-white text-xl">
+            WPM: <span className="text-yellow-400"> {netSpeed} WPM</span>
           </p>
-          <p className="text-white">
+          <p className="text-white text-xl">
             {" "}
-            Accuracy: <span className="text-yellow-400"> {accuracy}% </span>
+            Acc: <span className="text-yellow-400"> {accuracy}% </span>
           </p>
           {/* <Divider />
           <Button
