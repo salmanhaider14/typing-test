@@ -7,7 +7,15 @@ import Fade from "@mui/material/Fade";
 import Backdrop from "@mui/material/Backdrop";
 import { useState, useEffect, useRef } from "react";
 import ResultModal from "./Modal";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import {
+  FormControl,
+  FormControlLabel,
+  InputLabel,
+  MenuItem,
+  Radio,
+  RadioGroup,
+  Select,
+} from "@mui/material";
 import Footer from "./Footer";
 
 const texts = [
@@ -120,27 +128,38 @@ const TypingTest = () => {
           My Typo Test
         </h1>
         <div className="md:w-[60%] w-full flex flex-col p-2 gap-3 mt-4 ">
-          {!started && (
-            <div>
-              <FormControl fullWidth>
-                <InputLabel id="time-select-label">Select Time</InputLabel>
-                <Select
-                  labelId="time-select-label"
-                  id="time-select"
-                  value={timer}
-                  onChange={handleTimeChange}
-                  label="Select Time"
-                >
-                  <MenuItem value={15}>15 seconds</MenuItem>
-                  <MenuItem value={30}>30 seconds</MenuItem>
-                  <MenuItem value={60}>1 minute</MenuItem>
-                  {/* Add more time options as needed */}
-                </Select>
-              </FormControl>
-            </div>
-          )}
-          <div>
+          <div className=" flex gap-3 justify-center items-center ">
             <Chip label={`Time: ${timer}`} className="shadow-md" />
+            {!started && (
+              <div>
+                <FormControl component="fieldset">
+                  <RadioGroup
+                    row
+                    aria-label="time"
+                    name="time"
+                    value={timer.toString()}
+                    onChange={handleTimeChange}
+                  >
+                    <FormControlLabel
+                      value="15"
+                      control={<Radio color="default" />}
+                      label="15 seconds"
+                    />
+                    <FormControlLabel
+                      value="30"
+                      control={<Radio color="default" />}
+                      label="30 seconds"
+                    />
+                    <FormControlLabel
+                      value="60"
+                      control={<Radio color="default" />}
+                      label="1 minute"
+                    />
+                    {/* Add more time options as needed */}
+                  </RadioGroup>
+                </FormControl>
+              </div>
+            )}
           </div>
           <div className="bg-white p-3 rounded-md shadow-lg">
             <p>{text}</p>
