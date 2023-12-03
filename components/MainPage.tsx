@@ -8,6 +8,7 @@ import Backdrop from "@mui/material/Backdrop";
 import { useState, useEffect, useRef } from "react";
 import ResultModal from "./Modal";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import Footer from "./Footer";
 
 const texts = [
   "The sun dipped below the horizon, casting a warm glow across the tranquil lake. As the last rays of light danced on the water's surface, a gentle breeze rustled the leaves of the surrounding trees. Nature seemed to exhale in the serenity of the moment, inviting contemplation and peace.",
@@ -63,7 +64,6 @@ const TypingTest = () => {
   const handleStart = () => {
     setStarted(true);
     setStartTime(new Date().getTime());
-    setTimer(15); // Reset the timer when starting a new test
   };
 
   const handleInputChange = (e: any) => {
@@ -108,51 +108,62 @@ const TypingTest = () => {
   };
 
   return (
-    <div className="flex items-center  flex-col p-2 gap-2 w-full min-h-screen ">
-      <h1 className="text-4xl font-bold text-center my-5 ">Typing Test</h1>
-      <div className="md:w-[60%] w-full flex flex-col p-2 gap-3 mt-4 ">
-        {!started && (
+    <>
+      <div
+        className="flex items-center  flex-col p-2 gap-2 w-full min-h-screen "
+        style={{
+          backgroundImage:
+            "radial-gradient( circle 1224px at 10.6% 8.8%,  rgba(255,255,255,1) 0%, rgba(153,202,251,1) 100.2% )",
+        }}
+      >
+        <h1 className="text-5xl font-bold text-center my-5 text-[#31304D] drop-shadow-lg">
+          My Typo Test
+        </h1>
+        <div className="md:w-[60%] w-full flex flex-col p-2 gap-3 mt-4 ">
+          {!started && (
+            <div>
+              <FormControl fullWidth>
+                <InputLabel id="time-select-label">Select Time</InputLabel>
+                <Select
+                  labelId="time-select-label"
+                  id="time-select"
+                  value={timer}
+                  onChange={handleTimeChange}
+                  label="Select Time"
+                >
+                  <MenuItem value={15}>15 seconds</MenuItem>
+                  <MenuItem value={30}>30 seconds</MenuItem>
+                  <MenuItem value={60}>1 minute</MenuItem>
+                  {/* Add more time options as needed */}
+                </Select>
+              </FormControl>
+            </div>
+          )}
           <div>
-            <FormControl fullWidth>
-              <InputLabel id="time-select-label">Select Time</InputLabel>
-              <Select
-                labelId="time-select-label"
-                id="time-select"
-                value={timer}
-                onChange={handleTimeChange}
-                label="Select Time"
-              >
-                <MenuItem value={15}>15 seconds</MenuItem>
-                <MenuItem value={30}>30 seconds</MenuItem>
-                <MenuItem value={60}>1 minute</MenuItem>
-                {/* Add more time options as needed */}
-              </Select>
-            </FormControl>
+            <Chip label={`Time: ${timer}`} className="shadow-md" />
           </div>
-        )}
-        <div>
-          <Chip label={`Time: ${timer}`} className="shadow-md" />
+          <div className="bg-white p-3 rounded-md shadow-lg">
+            <p>{text}</p>
+          </div>
+          <textarea
+            ref={textAreaRef}
+            placeholder="Start Typing..."
+            className="text-white bg-gray-600 min-h-[110px] p-2 rounded-md focus:outline-[#31304D] shadow-lg border-2"
+            value={input}
+            onChange={handleInputChange}
+            onFocus={handleStart}
+          />
         </div>
-        <div>
-          <p>{text}</p>
-        </div>
-        <textarea
-          ref={textAreaRef}
-          placeholder="Start Typing..."
-          className="text-white bg-gray-600 min-h-[100px] p-2 rounded-md focus:outline-blue-500 shadow-lg border-2"
-          value={input}
-          onChange={handleInputChange}
-          onFocus={handleStart}
+
+        <ResultModal
+          netSpeed={netSpeed}
+          accuracy={accuracy}
+          openModal={openModal}
+          handleCloseModal={handleCloseModal}
         />
       </div>
-
-      <ResultModal
-        netSpeed={netSpeed}
-        accuracy={accuracy}
-        openModal={openModal}
-        handleCloseModal={handleCloseModal}
-      />
-    </div>
+      <Footer />
+    </>
   );
 };
 
