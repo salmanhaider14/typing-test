@@ -5,7 +5,7 @@ import Chip from "@mui/material/Chip";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Backdrop from "@mui/material/Backdrop";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import ResultModal from "./Modal";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
@@ -28,6 +28,7 @@ const TypingTest = () => {
   const [openModal, setOpenModal] = useState(false);
   const [netSpeed, setNetSpeed] = useState<number>(0);
   const [accuracy, setAccuracy] = useState<number>(0);
+  const textAreaRef: any = useRef(null);
 
   const handleOpenModal = () => {
     setOpenModal(true);
@@ -99,6 +100,10 @@ const TypingTest = () => {
     console.log("Net Speed:", netSpeed, "WPM");
 
     console.log("Accuracy:", accuracy, "%");
+    if (textAreaRef.current) {
+      textAreaRef.current.blur();
+    }
+    setTimer(15);
     handleOpenModal();
   };
 
@@ -106,23 +111,25 @@ const TypingTest = () => {
     <div className="flex items-center  flex-col p-2 gap-2 w-full min-h-screen ">
       <h1 className="text-4xl font-bold text-center my-5 ">Typing Test</h1>
       <div className="md:w-[60%] w-full flex flex-col p-2 gap-3 mt-4 ">
-        <div>
-          <FormControl fullWidth>
-            <InputLabel id="time-select-label">Select Time</InputLabel>
-            <Select
-              labelId="time-select-label"
-              id="time-select"
-              value={timer}
-              onChange={handleTimeChange}
-              label="Select Time"
-            >
-              <MenuItem value={15}>15 seconds</MenuItem>
-              <MenuItem value={30}>30 seconds</MenuItem>
-              <MenuItem value={60}>1 minute</MenuItem>
-              {/* Add more time options as needed */}
-            </Select>
-          </FormControl>
-        </div>
+        {!started && (
+          <div>
+            <FormControl fullWidth>
+              <InputLabel id="time-select-label">Select Time</InputLabel>
+              <Select
+                labelId="time-select-label"
+                id="time-select"
+                value={timer}
+                onChange={handleTimeChange}
+                label="Select Time"
+              >
+                <MenuItem value={15}>15 seconds</MenuItem>
+                <MenuItem value={30}>30 seconds</MenuItem>
+                <MenuItem value={60}>1 minute</MenuItem>
+                {/* Add more time options as needed */}
+              </Select>
+            </FormControl>
+          </div>
+        )}
         <div>
           <Chip label={`Time: ${timer}`} className="shadow-md" />
         </div>
@@ -130,6 +137,7 @@ const TypingTest = () => {
           <p>{text}</p>
         </div>
         <textarea
+          ref={textAreaRef}
           placeholder="Start Typing..."
           className="text-white bg-gray-600 min-h-[100px] p-2 rounded-md focus:outline-blue-500 shadow-lg border-2"
           value={input}
