@@ -245,7 +245,7 @@ const TypingTest = () => {
             </div>
           </div>
           <Divider />
-          <div className="bg-white p-3 rounded-md shadow-lg mt-3">
+          <div className="bg-white p-3 rounded-md shadow-lg mt-3 lg:text-xl md:text-lg text-md">
             {/* <p>{text}</p> */}
             {text.split(/\s+/).map((word, index) => (
               <span
@@ -267,7 +267,7 @@ const TypingTest = () => {
             <textarea
               ref={textAreaRef}
               placeholder="Start Typing..."
-              className="text-white bg-gray-600 min-h-[110px] p-2 rounded-md focus:outline-[#31304D] shadow-lg border-2"
+              className="text-white bg-gray-600 min-h-[150px] p-2 rounded-md focus:outline-[#31304D] shadow-lg border-2 lg:text-xl md:text-lg text-md"
               value={input}
               onChange={handleInputChange}
               onFocus={handleStart}
@@ -290,17 +290,29 @@ const TypingTest = () => {
               Result
             </h2>
             <Divider />
-            <p id="modal-modal-description" className="text-white text-xl">
-              wpm: <span className="text-yellow-400"> {netSpeed} WPM</span>
-            </p>
-            <p className="text-white text-xl">
+            <div className="flex justify-around">
               {" "}
-              acc: <span className="text-yellow-400"> {accuracy}% </span>
-            </p>
+              <p id="modal-modal-description" className="text-white text-xl">
+                wpm:{" "}
+                <span className="text-green-400 font-medium">
+                  {" "}
+                  {netSpeed} WPM
+                </span>
+              </p>
+              <p className="text-white text-xl">
+                {" "}
+                acc:{" "}
+                <span className="text-green-400 font-medium">
+                  {" "}
+                  {accuracy}%{" "}
+                </span>
+              </p>
+            </div>
+
             <Divider />
             <Button
               variant="contained"
-              className="bg-[#EE7214] hover:bg-orange-700"
+              className="bg-green-500 font-bold hover:bg-green-600"
               onClick={() => setTimer(15)}
               endIcon={<ReplayIcon />}
               color="success"
